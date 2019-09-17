@@ -6,6 +6,8 @@ import com.lambdaschool.school.view.CountStudentsInCourses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,11 +28,15 @@ public class CourseController
     @Autowired
     private CourseService courseService;
 
+    // localhost:2019/courses/courses/?page=0&size=3
     @GetMapping(value = "/courses", produces = {"application/json"})
-    public ResponseEntity<?> listAllCourses(HttpServletRequest request)
+//    public ResponseEntity<?> listAllCourses(HttpServletRequest request)
+    public ResponseEntity<?> listAllCourses(HttpServletRequest request, @PageableDefault(size = 5)
+                                                    Pageable pageable)
+
     {
         logger.info(request.getMethod().toUpperCase() + " " + request.getRequestURI() + " accessed on " + LocalDate.now() + " at " + LocalTime.now() + ".");
-        ArrayList<Course> myCourses = courseService.findAll();
+        ArrayList<Course> myCourses = courseService.findAll(pageable);
         return new ResponseEntity<>(myCourses, HttpStatus.OK);
     }
 
