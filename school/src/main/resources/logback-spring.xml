@@ -43,7 +43,7 @@
         </rollingPolicy>
     </appender>
 
-    <root level="TRACE" additivity="false">
+    <root level="INFO" additivity="false">
         <!-- purpose of STDOUT is to be able to print something to console if you want -->
         <appender-ref ref = "STDOUT" />
         <appender-ref ref = "FILE" />
